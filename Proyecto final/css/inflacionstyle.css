@@ -1,0 +1,25 @@
+*{
+    padding: 5px;
+    margin: 5px;
+}
+body{
+    background: black;
+    color: white;
+    font-family: 'Times New Roman', Times, serif;
+}
+h1{
+    text-align: center;
+    background-image: url(..//img/infa.jpg);
+    text-transform: uppercase;
+}
+img{
+    width: 400px;
+    float:calc(400px - 100px);
+    opacity: 0.8;
+}
+p{
+    text-align: left;
+}
+ol{
+    margin: 20px;
+}
