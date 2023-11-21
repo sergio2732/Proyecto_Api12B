@@ -1,6 +1,9 @@
 # Proyecto_Api12B
 Cambios realizados:
-En el index se cambio la variable if($endPoint != 'login') por un == 'login', para que pueda realizar la autentificación correctamente sin interrumpor los otros procesos en los diferentes endpoint como 'users'.
-En el userController se comentaron las variables //echo($this->_method); //echo( $this->_complement."    "); //var_dump($this->_data); para que la salida del thunder client no tenga variables innecesarias y se pueda mostrar las variables deseadas en un formato json.
-
+- En el index se cambio la variable if($endPoint != 'login') por un == 'login', para que pueda realizar la autentificación correctamente sin interrumpor los otros procesos en los diferentes endpoint como 'users'.
+- En el userController se comentaron las variables //echo($this->_method); //echo( $this->_complement."    "); //var_dump($this->_data); para que la salida del thunder client no tenga variables innecesarias y se pueda mostrar las variables deseadas en un formato json. 
+- Se elimina la encriptación md5 por que esta no se va implementar en la api sino que se implementa en el android studio.
+- En el userModel implementamos una funcion para actualizar los datos del usuario basandonos en la estructura de crear usuario, pero usando la sentencia de sql llamada "UPDATE" que sirve para actualizar los datos registrados, en este caso se podra modificar la contraseña con el id de la cuenta y/o el correo que se encuentran registrados en la variable $data para las identificar que se va a modificar se debe usar el "WHERE" en la sentencia SQL.
+- En el userModel se crea una función para eliminar el usuario completamente, esto usando la estructura de las funciones anteriormente creadas y la sentencia SQL "DELETE" para identificar cual usuario se va a eliminar usamos los datos de la varaible $data tanto el user_mail como el user_id, puede eliminar la cuenta con cualquiera de las dos variables que se pasen.
+- Para implementar las dos nuevas funciones agregamos una variable que equivalga a una abreviación del if-else, donde primero se verifica si "this->_data" es un arreglo, si es asi el valor equivaldra a este mismo, sino será un arreglo vacio, luego traemos la función creada desde el UserModel, definimos una variable "$json" que tendra un arreglo con el valor de la funcion y por ultimo se imprime un echo json_encode (Para que pueda leer los valores tipo json) en el cual irá la variable $json con un booleano true 
 
