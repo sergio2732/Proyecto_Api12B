@@ -8,10 +8,6 @@ class UserController{
         $this->_method = $method;
         $this->_complement = $complement == null ? 0 : $complement;
         $this->_data = $data != 0 ? $data : "";
-        //echo($this->_method);
-        //echo( $this->_complement."    ");
-        //var_dump($this->_data);
-
     } 
 
     public function index(){
