@@ -3,14 +3,6 @@ require_once ("controller/routesController.php");
 require_once ("controller/userController.php");
 require_once ("controller/loginController.php");
 require_once ("model/userModel.php");
-//Instancia
-/*$my_object = new Connection();
-$my_object->hola;
-//Acceder a atributos estaticos
-var_export($my_object);
-$query = "SELECT * FROM users";
-$conectar = Connection::connecction()->prepare($query);
-var_dump($conectar);*/
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE");
@@ -18,8 +10,6 @@ header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 header('Access-Control-Allow-Headers: Authorization');
 $rutasArray = explode("/", $_SERVER['REQUEST_URI']);
 $endPoint = (array_filter($rutasArray)[2]);
-//var_dump(isset($_SERVER['PHP_AUTH_USER']));
-//var_dump(isset($_SERVER['PHP_AUTH_PW']));
 if($endPoint == 'login'){
     if(isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW'])){
         var_dump(isset($_SERVER['PHP_AUTH_USER']));
@@ -29,7 +19,7 @@ if($endPoint == 'login'){
         $key = $_SERVER['PHP_AUTH_PW'];
         $users = UserModel::getUseAuth();
         foreach($users as $u){
-            if($identifier.":".$key == $u["user_identifier"].":".$u["user_key"]){
+            if($identifier.":".$key == $u["user_identifier"].":".$u["user_key"]){//verificar el usuario usando el key y el identiffier concatenandolos los de auntentificaion y comparandolos
                 $ok = true;
             }
         }
