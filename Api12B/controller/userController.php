@@ -12,7 +12,7 @@ class UserController{
 
     public function index(){
     switch($this->_method){
-        case "GET":
+        case 'GET':
             if($this->_complement == 0){
                 $user = UserModel::getUsers(0);
                 $json = $user;
@@ -31,18 +31,26 @@ class UserController{
             );
             echo json_encode($json, true);
             return;
-        case "UPDATE":
+        case 'PATCH':
+            $updateUser = UserModel::updateUsers($this->_data);
             $json = array(
-                "response: " => "update de user"
+                "response" => $updateUser
             );
             echo json_encode($json, true);
             return;
-        case "DELETE":
+        case 'DELETE':
+            $deleteUser = UserModel::deleteUsers($this->_data);
             $json = array(
-                "response: " => "delete de user"
+                "response: " => $deleteUser
             );
             echo json_encode($json, true);
             return;
+        case 'OPTIONS':
+            $changeStatus = UserModel::changeStatus($this->_data);
+            $json = array(
+                "response: " => $changeStatus 
+            );
+            echo json_encode($json, true);
         default:
             $json = array(
                 "response: " => "not found"
