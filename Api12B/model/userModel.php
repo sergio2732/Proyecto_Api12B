@@ -48,7 +48,7 @@ class UserModel{
     static public function login($data){
         $query = "";
         $user = $data['user_mail'];
-        $pss = md5($data['user_pss']);
+        $pss = $data['user_pss'];
         if(!empty($user) && !empty($pss)){
             $query = "SELECT user_id, user_identifier, user_key FROM users WHERE user_mail = '$user' and
             user_pss = '$pss' and user_status = '1';";
@@ -72,5 +72,49 @@ class UserModel{
         $result = $stament -> fetchAll(PDO::FETCH_ASSOC);   
         return $result;
     }
+    static public function updateUsers($data){
+        $cantMail = self::getMail($data['user_mail']);
+        if ($cantMail != 0) {
+            $query = "UPDATE users SET user_mail = :user_mail, user_pss = :user_pss WHERE user_id = :user_id AND user_status = '1';";
+            $stament = Connection::connecction()->prepare($query);
+            $stament->bindParam(":user_id", $data['user_id'], PDO::PARAM_INT);
+            $stament->bindParam(":user_mail", $data['user_mail'], PDO::PARAM_STR);
+            $stament->bindParam(":user_pss", $data['user_pss'], PDO::PARAM_STR); 
+            $message = $stament->execute() ? "Usuario actualizado" : Connection::connecction()->errorInfo();  
+            $stament->closeCursor();
+            $stament = null;
+            $query = "";
+        } else {
+            $message = "No se ha registrado el usuario";
+        }
+        return $message;
+    }       
+    static public function deleteUsers($data){
+        $cantMail = self::getMail($data['user_mail']);
+        if($cantMail == 1){
+            $query = "DELETE FROM users WHERE user_mail = :user_mail OR user_id = :user_id";
+            $stament = Connection::connecction()->prepare($query);
+            $stament->bindParam(":user_mail", $data['user_mail'], PDO::PARAM_STR);
+            $stament->bindParam(":user_id", $data['user_id'], PDO::PARAM_INT);
+            $message = $stament->execute() ? "Usuario eliminado" : Connection::connecction()->errorInfo();
+            $stament->closeCursor();
+            $stament = null;
+            $query = "";
+        }else{
+            $message = "La cuenta no existe";
+        }
+        return $message;
+    }
+    static public function changeStatus($data){
+        $query = "UPDATE users SET user_status = :user_status WHERE user_id = :user_id";
+        $stament = Connection::connecction()->prepare($query);
+        $status = "1";
+        $stament->bindParam(":user_id", $data['user_id'], PDO::PARAM_INT);
+        $stament->bindParam(":user_status", $status, PDO::PARAM_STR); // Cambiado a PDO::PARAM_STR
+        $message = $stament->execute() ? "Status actualizado" : Connection::connecction()->errorInfo();  
+        $stament->closeCursor();
+        $stament = null; 
+        return $message;
+    }       
 }
 ?>
